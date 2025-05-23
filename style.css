@@ -55,7 +55,7 @@ h2::after {
 
 .top-nav ul {
   margin: 0;
-  padding: 10px 20px;
+  padding: 30px 20px;
   display: flex;
   justify-content: center;
   list-style: none;
@@ -65,14 +65,14 @@ h2::after {
 .top-nav ul li a {
   text-decoration: none;
   color: #333;
-  font-weight: bold;
+  font-weight: 600;
   padding: 8px 12px;
   transition: color 0.3s, background 0.3s;
 }
 
 .top-nav ul li a:hover,
 .top-nav ul li a.active {
-  background: #a6c1ee;
+  background: #333;
   color: white;
   border-radius: 5px;
 }
