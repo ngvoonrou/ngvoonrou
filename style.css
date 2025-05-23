@@ -1,0 +1,26 @@
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+}
+section {
+  padding: 40px 20px;
+  border-bottom: 1px solid #ddd;
+}
+.gallery {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+}
+.gallery img {
+  width: 300px;
+  border-radius: 8px;
+}
+h1,
+h2 {
+  margin-bottom: 10px;
+}
+iframe {
+  border-radius: 8px;
+}
