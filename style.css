@@ -1,26 +1,236 @@
-body {
-  font-family: sans-serif;
-  margin: 0;
-  padding: 0;
-  line-height: 1.6;
+* {
+  box-sizing: border-box;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  scroll-behavior: smooth;
+  background: #f9f9f9;
+  color: #333;
+}
+
+/* navigation */
+.top-nav {
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+.top-nav ul {
+  margin: 0;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  gap: 30px;
+}
+.top-nav ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  padding: 8px 12px;
+  transition: color 0.3s, background 0.3s;
+}
+
+.top-nav ul li a.active {
+  background: #a6c1ee;
+  color: white;
+  border-radius: 5px;
+}
+
+header.hero {
+  background: linear-gradient(to right, #fbc2eb, #a6c1ee);
+  color: #fff;
+  text-align: center;
+  padding: 120px 20px;
+  position: relative;
+  animation: fadeIn 2s ease-in;
+  background-size: 200% 200%;
+  animation: gradientShift 10s ease infinite;
+  overflow: hidden;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+header.hero h1 {
+  font-size: 4em;
+  margin: 0;
+  letter-spacing: 2px;
+  animation: fadeSlideIn 1.5s ease-in-out forwards;
+  opacity: 0;
+}
+
+header.hero h1:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease-in-out;
+}
+
+header.hero p {
+  font-size: 1.5em;
+  margin-top: 20px;
+  animation: fadeSlideIn 2s ease-in-out forwards;
+  opacity: 0;
+}
+
+header.hero p:hover {
+  color: #ffe7fa;
+  transition: color 0.3s;
+}
+
+header.hero h1,
+header.hero p {
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 section {
-  padding: 40px 20px;
-  border-bottom: 1px solid #ddd;
+  padding: 60px 20px;
+  max-width: 1000px;
+  margin: auto;
+}
+h2 {
+  font-size: 2em;
+  color: #222;
+  margin-bottom: 20px;
+  position: relative;
+  animation: slideInLeft 1s ease-in-out;
+}
+h2::after {
+  content: "";
+  width: 50px;
+  height: 3px;
+  background: #a6c1ee;
+  position: absolute;
+  bottom: -10px;
+  left: 0;
 }
 .gallery {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 10px;
 }
 .gallery img {
   width: 300px;
-  border-radius: 8px;
+  height: auto;
+  border-radius: 10px;
+  scroll-snap-align: start;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-h1,
-h2 {
-  margin-bottom: 10px;
+.gallery img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
-iframe {
-  border-radius: 8px;
+.fancy-gallery {
+  padding: 20px;
+  overflow-x: scroll;
+  scrollbar-width: thin;
+}
+.fancy-gallery::-webkit-scrollbar {
+  height: 8px;
+}
+.fancy-gallery::-webkit-scrollbar-track {
+  background: transparent;
+}
+.fancy-gallery::-webkit-scrollbar-thumb {
+  background: #a6c1ee;
+  border-radius: 10px;
+}
+.fancy-gallery img {
+  transition: transform 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+.fancy-gallery img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
+}
+.reel-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+.reel-grid iframe {
+  width: 100%;
+  max-width: 500px;
+  height: 280px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+ul li {
+  background: #fff;
+  margin: 10px 0;
+  padding: 12px 16px;
+  border-left: 5px solid #a6c1ee;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s;
+}
+ul li:hover {
+  background: #f0f0ff;
+}
+#contact a {
+  color: #a6c1ee;
+  text-decoration: none;
+}
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #f1f1f1;
+  color: #666;
+  font-size: 0.9em;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
