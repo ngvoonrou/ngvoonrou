@@ -16,6 +16,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
   </head>
   <body>
     <nav class="top-nav">
@@ -28,12 +29,22 @@
       </ul>
     </nav>
 
-    <header class="hero">
+    <header class="hero" data-aos="fade-up" data-aos-delay="100">
+      <div class="hero-intro">Hi, I'm</div>
       <div class="hero-name-back">Shermin</div>
       <div class="hero-img-wrapper">
         <img src="img/shermin-soo2.png" alt="Shermin Soo" />
       </div>
       <div class="hero-name-front">Soo</div>
+
+      <div class="hero-badge-box">
+        <p><strong>Creative Marketer</strong> &<br />Visual Storyteller</p>
+        <p style="margin-top: 10px; color: #777; font-size: 0.85em">
+          <!-- Helping brands connect deeply through compelling digital narratives,
+          visual identity, and strategy. -->
+          <span id="typed-text"></span>
+        </p>
+      </div>
     </header>
 
     <section id="about" data-aos="fade-up" data-aos-delay="200">
@@ -109,6 +120,21 @@
         duration: 1000,
         offset: 100,
         easing: "ease-in-out",
+      });
+
+      // typing animation
+      document.addEventListener("DOMContentLoaded", function () {
+        new Typed("#typed-text", {
+          strings: [
+            "Helping brands connect deeply through compelling digital narratives, visual identity, and strategy.",
+          ],
+          typeSpeed: 35,
+          startDelay: 300,
+          backSpeed: 0,
+          backDelay: 500,
+          loop: false,
+          showCursor: false,
+        });
       });
     </script>
   </body>
