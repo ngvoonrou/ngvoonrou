@@ -62,70 +62,19 @@
     <!-- gallery style 1 - mansory -->
     <section id="portfolio" data-aos="zoom-in-up" data-aos-delay="300">
       <h2>Photography</h2>
-
       <div class="gallery-filters">
         <button onclick="filterGallery('all')">All</button>
         <button onclick="filterGallery('portrait')">Portrait</button>
         <button onclick="filterGallery('landscape')">Landscape</button>
       </div>
 
-      <div class="masonry-gallery">
-        <?php
-          $categories = [
-            'portrait' => 'assets/films/portraits',
-            'landscape' => 'assets/films/landscape'
-          ];
-          foreach ($categories as $category => $dir) {
-            $files = scandir($dir);
-            foreach ($files as $file) {
-              $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-              if (in_array($ext, ['jpg', 'jpeg', 'png'])) {
-                $title = ucwords(str_replace(['-', '_', '.jpg', '.jpeg', '.png'], [' ', ' ', '', '', ''], $file));
-                echo "<div class='gallery-item $category'>
-                        <img src='$dir/$file' alt='$title' />
-                      </div>";
-              }
-            }
-          }
-        ?>
-      </div>
+      <div class="masonry-gallery" id="masonryGallery"></div>
     </section>
 
     <!-- gallery style 2 -->
     <section id="recent-work" class="recent-work-section">
       <h2>Recent Work</h2>
-      <div class="recent-work-scroll">
-        <?php
-          $directories = [
-            'assets/films/landscape',
-            'assets/films/portraits'
-          ];
-
-          $index = 1;
-          foreach ($directories as $dir) {
-            if (is_dir($dir)) {
-              $files = scandir($dir);
-              foreach ($files as $file) {
-                $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
-                if (in_array($ext, ['jpg', 'jpeg', 'png'])) {
-                  $title = ucwords(str_replace(['-', '_', '.jpg', '.jpeg', '.png'], [' ', ' ', '', '', ''], $file));
-                  echo '<div class="recent-work-item">
-                          <img src="' . $dir . '/' . $file . '" alt="' . $title . '" />
-                          <div class="photo-meta">
-                            <div class="photo-index">/ ' . str_pad($index, 2, '0', STR_PAD_LEFT) . '</div>
-                            <div class="photo-info">
-                              <div class="photo-title">' . strtolower($title) . '</div>
-                              <div class="photo-year">2025</div>
-                            </div>
-                          </div>
-                        </div>';
-                  $index++;
-                }
-              }
-            }
-          }
-        ?>
-      </div>
+      <div class="recent-work-scroll" id="recentWorkContainer"></div>
     </section>
 
     <!-- gallery image modal when clicked -->
@@ -220,22 +169,49 @@
         });
       });
 
-      // mansory gallery filters seclection
+      // render gallery photography
+      function renderGallery(images) {
+        const gallery = document.getElementById('masonryGallery');
+        gallery.innerHTML = '';
+        images.forEach(img => {
+          const div = document.createElement('div');
+          div.className = `gallery-item ${img.category}`;
+          div.innerHTML = `<img src="${img.src}" alt="${img.title}">`;
+          gallery.appendChild(div);
+        });
+      }
+      
+      // filter gallery buttons
       function filterGallery(category) {
         const items = document.querySelectorAll(".gallery-item");
         items.forEach((item) => {
-          if (category === "all") {
-            item.style.display = "block";
-          } else {
-            item.style.display = item.classList.contains(category)
-              ? "block"
-              : "none";
-          }
+          item.style.display = category === "all" || item.classList.contains(category) ? "block" : "none";
         });
       }
 
-      // gallery image modal
-      document.addEventListener("DOMContentLoaded", function () {
+      // recent work
+      function renderRecentWork(data) {
+        const container = document.getElementById("recentWorkContainer");
+        container.innerHTML = "";
+        data.forEach((item, index) => {
+          const div = document.createElement("div");
+          div.className = "recent-work-item";
+          div.innerHTML = `
+            <img src="${item.src}" alt="${item.title}" />
+            <div class="photo-meta">
+              <div class="photo-index">/ ${String(index + 1).padStart(2, '0')}</div>
+              <div class="photo-info">
+                <div class="photo-title">${item.title}</div>
+                <div class="photo-year">${item.year}</div>
+              </div>
+            </div>
+          `;
+          container.appendChild(div);
+        });
+      }
+
+      // function for gallery image modal
+      function enableImageModal() {
         const modal = document.getElementById("imageModal");
         const modalImg = document.getElementById("modalImg");
         const modalCaption = document.getElementById("modalCaption");
@@ -276,13 +252,28 @@
           }
         });
 
-        // Close modal on outside click
         modal.addEventListener("click", (e) => {
           if (e.target === modal) {
             modal.style.display = "none";
           }
         });
-      });
+      }
+
+      // fetch gallery.json for photography
+      fetch('gallery.json')
+        .then(res => res.json())
+        .then(data => {
+          renderGallery(data);
+          enableImageModal();
+        });
+      
+      // fetch galley.json for recent work photography
+      fetch("gallery.json")
+        .then(res => res.json())
+        .then(data => {
+          renderRecentWork(data);
+          enableImageModal();
+        });
     </script>
   </body>
 </html>
